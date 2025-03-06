@@ -16,45 +16,42 @@ function submitPrompt() {
     let character = input[0]?.trim() || 'default';
     let theme = input[1]?.trim() || 'default';
 
-    // Simulate Grok's response (we’ll replace this with my actual output)
-    game = new Phaser.Game(config);
-    game.customData = {
+    // Grok’s response for "pirate, jungle"
+    let grokResponse = {
         character: character,
         theme: theme,
-        description: `A ${character} running through a ${theme}.`
+        description: "A swashbuckling pirate with a tricorn hat and peg leg, sprinting through a dense tropical jungle with vines and treasure.",
+        characterImage: 'https://via.placeholder.com/50x50.png?text=Pirate', // Replace with real URL
+        backgroundImage: 'https://via.placeholder.com/800x600.png?text=Jungle', // Replace with real URL
+        obstacleImage: 'https://via.placeholder.com/30x30.png?text=Crocodile' // Replace with real URL
     };
+
+    game = new Phaser.Game(config);
+    game.customData = grokResponse;
     document.getElementById('prompt-overlay').style.display = 'none';
 }
 
 function preload() {
-    // Placeholder assets for now
-    this.load.image('player', 'https://via.placeholder.com/50x50.png?text=Player');
-    this.load.image('background', 'https://via.placeholder.com/800x600.png?text=Background');
-    this.load.image('obstacle', 'https://via.placeholder.com/30x30.png?text=Obstacle');
+    this.load.image('player', game.customData.characterImage);
+    this.load.image('background', game.customData.backgroundImage);
+    this.load.image('obstacle', game.customData.obstacleImage);
 }
 
 function create() {
-    // Background
     background = this.add.tileSprite(0, 0, 800, 600, 'background').setOrigin(0, 0);
-
-    // Player
     player = this.physics.add.sprite(100, 500, 'player');
     player.setCollideWorldBounds(true);
 
-    // Obstacles
     obstacles = this.physics.add.group();
     this.physics.add.collider(player, obstacles, gameOver, null, this);
     this.time.addEvent({ delay: 2000, callback: spawnObstacle, callbackScope: this, loop: true });
 
-    // Controls
     this.input.keyboard.on('keydown-SPACE', () => player.setVelocityY(-300));
-
-    // Display description
     this.add.text(10, 10, game.customData.description, { fontSize: '16px', color: '#fff' });
 }
 
 function update() {
-    background.tilePositionX += 5; // Scroll background
+    background.tilePositionX += 5;
 }
 
 function spawnObstacle() {
