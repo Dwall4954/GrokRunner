@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Running Fred</title>
+    <style>
+        body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #000; }
+        #game-container { position: relative; }
+        #prompt-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; text-align: center; }
+        #prompt-overlay input { padding: 5px; width: 200px; }
+        #prompt-overlay button { padding: 5px 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game"></canvas>
+        <div id="prompt-overlay">
+            <p>Hi, I’m Grok from xAI! Tell me your character (e.g., 'ninja cat') and level theme (e.g., 'haunted forest'):</p>
+            <input type="text" id="user-input" placeholder="e.g., ninja cat, haunted forest">
+            <button onclick="submitPrompt()">Submit</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
